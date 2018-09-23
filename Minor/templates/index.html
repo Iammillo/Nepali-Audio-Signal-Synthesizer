@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>आवाज</title>
+    <script>
+
+        function call()
+        {
+                var xhttp = new XMLHttpRequest();
+                x= "{{ csrf_token }}";
+                document.getElementById("reply").innerHTML ="";
+
+                xhttp.onreadystatechange = function()
+                {
+
+                    if(this.readyState==4 && this.status==200)
+                    {
+
+                      document.getElementById("reply").innerHTML =this.responseText;
+                    }
+                }
+                xhttp.open("POST", "/request/", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.setRequestHeader('X-CSRFToken', x);
+                var text = document.getElementById("words").value;
+                text = "text="+text;
+                xhttp.send(text);
+        }
+    </script>
+  </head>
+  <body>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <form method = "POST">
+      {% csrf_token %}
+      &nbsp&nbsp&nbsp <span style="font-size:30px;"><b>Input Text:</b></span>&nbsp&nbsp&nbsp  <input type="text" style ="height:50px; width:1000px;font-size:30px;" align = middle id = "words"/>
+      <input type="button" value="Play" style="height:60px;width:100px;font-size:30px; background-color: blue;color:white;" onclick ="call()" >
+      <br /><br /><br />
+      <p id = "reply" align = middle style="font-size:30px"></p>
+    </form>
+  </body>
+</html>
